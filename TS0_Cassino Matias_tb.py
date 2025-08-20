@@ -50,7 +50,7 @@ def mi_funcion_sen( vmax, dc, ff, ph, nn, fs):
     ts = 1/fs # tiempo de muestreo
     tt = np.linspace(0, (N-1)*ts, N).flatten() # grilla de sampleo temporal
     arg = 2*np.pi*ff*tt + ph # argumento
-    xx = vmax*(np.sin(arg) + dc).flatten() # señal
+    xx = (vmax*(np.sin(arg)) + dc).flatten() # señal
     
     #%% Presentación gráfica de los resultados
     plt.figure()
@@ -59,6 +59,8 @@ def mi_funcion_sen( vmax, dc, ff, ph, nn, fs):
     plt.xlabel('tiempo [s]')
     plt.ylabel('Amplitud [V]')
     plt.grid()
+    plt.xlim([tt.min() - 0.1*(tt.max()-tt.min()), tt.max() + 0.1*(tt.max()-tt.min())])
+    plt.ylim([xx.min() - 0.1*(xx.max()-xx.min()), xx.max() + 0.1*(xx.max()-xx.min())])
     plt.legend()
     plt.show() 
     
@@ -70,7 +72,7 @@ def mi_funcion_triangular( vmax, dc, ff, ph, nn, fs):
     ts = 1/fs # tiempo de muestreo
     tt_aux = np.linspace(0, (N-1)*ts, N).flatten() # grilla de sampleo temporal
     arg = 2*np.pi*ff*tt_aux + ph # argumento
-    xx_aux = vmax*(signal.sawtooth(arg) + dc).flatten() # señal
+    xx_aux = (vmax*(signal.sawtooth(arg)) + dc).flatten() # señal
     
     #%% Presentación gráfica de los resultados
     plt.figure()
@@ -79,6 +81,8 @@ def mi_funcion_triangular( vmax, dc, ff, ph, nn, fs):
     plt.xlabel('tiempo [s]')
     plt.ylabel('Amplitud [V]')
     plt.grid()
+    plt.xlim([tt_aux.min() - 0.1*(tt_aux.max()-tt_aux.min()), tt_aux.max() + 0.1*(tt_aux.max()-tt_aux.min())])
+    plt.ylim([xx_aux.min() - 0.1*(xx_aux.max()-xx_aux.min()), xx_aux.max() + 0.1*(xx_aux.max()-xx_aux.min())])
     plt.legend()
     plt.show() 
     
@@ -89,6 +93,21 @@ fs = 1000.0 # frecuencia de muestreo (Hz)
 N = 1000   # cantidad de muestras
 
 #%% Ejemplo de invocación de las funciones
-#tt,xx = mi_funcion_sen(vmax = 1, dc = 0, ff = 1, ph=0, nn=N,fs=fs)
+# tt,xx = mi_funcion_sen(vmax = 1, dc = 0, ff = 1, ph=0, nn=N,fs=fs)
+# tt,xx = mi_funcion_sen(vmax = 1, dc = 0, ff = 500, ph=0, nn=N,fs=fs)
+# tt,xx = mi_funcion_sen(vmax = 1, dc = 0, ff = 999, ph=0, nn=N,fs=fs)
+# tt,xx = mi_funcion_sen(vmax = 1, dc = 0, ff = 1001, ph=0, nn=N,fs=fs)
+# tt,xx = mi_funcion_sen(vmax = 1, dc = 0, ff = 2001, ph=0, nn=N,fs=fs)
+# tt,xx = mi_funcion_sen(vmax = 1, dc = 0, ff = 400, ph=0, nn=N,fs=fs)
+# tt,xx = mi_funcion_sen(vmax = 1, dc = 0, ff = 100, ph=0, nn=N,fs=fs)
+# tt,xx = mi_funcion_sen(vmax = 1, dc = 0, ff = 150, ph=0, nn=N,fs=fs)
+# tt,xx = mi_funcion_sen(vmax = 1, dc = 0, ff = 200, ph=0, nn=N,fs=fs)
+# tt,xx = mi_funcion_sen(vmax = 1, dc = 0, ff = 250, ph=0, nn=N,fs=fs)
+# tt,xx = mi_funcion_sen(vmax = 1, dc = 0, ff = 2000, ph=0, nn=N,fs=fs)
+# tt,xx = mi_funcion_sen(vmax = 1, dc = 0, ff = 501, ph=0, nn=N,fs=fs)
+# tt,xx = mi_funcion_sen(vmax = 1, dc = 3, ff = 500, ph=0, nn=N,fs=fs)
+# tt,xx = mi_funcion_sen(vmax = 1, dc = 0, ff = 500, ph=np.pi/2, nn=N,fs=fs)
+# tt,xx = mi_funcion_sen(vmax = 1, dc = 0, ff = 1000, ph=0, nn=N,fs=fs)
+# tt,xx = mi_funcion_sen(vmax = 1, dc = 0, ff = 0, ph=0, nn=N,fs=fs)
 #tt_aux,xx_aux = mi_funcion_triangular(vmax = 1, dc = 0, ff = 1, ph=0, nn=N,fs=fs)
    
