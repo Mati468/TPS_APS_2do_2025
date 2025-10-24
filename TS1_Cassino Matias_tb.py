@@ -149,18 +149,20 @@ def sen_modulada(vmax_1, vmax_2, dc_1, dc_2, ff_1, ff_2, ph_1, ph_2, N, fs):
 
 
 def grafico_correlacion(x, y, fs, N, titulo):
-    r_xy = correlate(x, y, mode='full')
-    lags = np.arange(-N+1, N)
-    t_lags = lags / fs  # eje x como desplazamiento temporal
+    #r_xy = correlate(x, y, mode='full')
+    r_xy = correlate(x, y)
+    #lags = np.arange(-N+1, N)
+    #t_lags = lags / fs  # eje x como desplazamiento temporal
     
     #Presentación gráfica de los resultados
     plt.figure()
-    plt.plot(t_lags, r_xy)
+    #plt.plot(t_lags, r_xy)
+    plt.stem(r_xy)
     plt.title(titulo)
     plt.xlabel("Delta t [s]")
     plt.ylabel("Correlación")
-    plt.xlim([t_lags.min() - 0.1*(t_lags.max()-t_lags.min()), t_lags.max() + 0.1*(t_lags.max()-t_lags.min())])
-    plt.ylim([r_xy.min() - 0.1*(r_xy.max()-r_xy.min()), r_xy.max() + 0.1*(r_xy.max()-r_xy.min())])
+    #plt.xlim([t_lags.min() - 0.1*(t_lags.max()-t_lags.min()), t_lags.max() + 0.1*(t_lags.max()-t_lags.min())])
+    #plt.ylim([r_xy.min() - 0.1*(r_xy.max()-r_xy.min()), r_xy.max() + 0.1*(r_xy.max()-r_xy.min())])
     plt.grid()
     plt.show()
     
@@ -247,8 +249,11 @@ def ortogonalidad(x, y, tolerancia):
 
 
 #%% Parámetros
-fs = 60000 # frecuencia de muestreo (Hz)
-N = 60000   # cantidad de muestras
+# fs = 50000 # frecuencia de muestreo (Hz)
+# N = 750   # cantidad de muestras
+
+fs = 40000 # frecuencia de muestreo (Hz)
+N = 500   # cantidad de muestras
 
 #%% Invocación de las funciones del punto 1
 tt_a,xx_a = mi_funcion_sen(vmax = 1, dc = 0, ff = 2000, ph=0, N=N,fs=fs)
