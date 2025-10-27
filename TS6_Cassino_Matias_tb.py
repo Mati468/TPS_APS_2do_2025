@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-@author: Matías Cassino
+Created on Sun Oct 26 20:52:21 2025
+
+@author: Nancy
 """
+
+
 #%% Módulos
 import numpy as np
 import matplotlib.pyplot as plt
@@ -13,11 +17,14 @@ from matplotlib import patches
 
 plt.close('all')
 
-def rta_frec(b,a,worN,label):
+
+def rta_frec_y_fase(b,a,worN,label):
     w,h=signal.freqs(b,a,worN)
+    phase=np.unwrap(np.angle(h))
     
     # Gráfico de módulo
-    plt.figure()
+    plt.figure(figsize=(12,10))
+    plt.subplot(1,2,1)
     plt.semilogx(w, 20*np.log10(abs(h)),label=label)
     plt.title('Respuesta en Magnitud')
     plt.xlabel('Pulsación angular [r/s]')
@@ -25,21 +32,16 @@ def rta_frec(b,a,worN,label):
     plt.grid(True, which='both', ls=':')
     plt.legend()
     
-    return w,h
-
-def fase(w,h,label):
-    phase=np.unwrap(np.angle(h))
-    
     # Gráfico de fase
-    plt.figure()
-    # plt.semilogx(w, np.degrees(phase),label=f_aprox)
+    plt.subplot(1,2,2)
     plt.semilogx(w, phase,label=label)
     plt.title('Respuesta de fase')
     plt.xlabel('Pulsación angular [r/s]')
     plt.ylabel('Fase [rad]')
     plt.grid(True, which='both', ls=':')
     plt.legend()
-    return phase
+    
+    return w,h,phase
 
 def polos_y_ceros(b,a,axis,label):
     z,p,k=signal.tf2zpk(b, a) 
@@ -93,15 +95,10 @@ axis_total=[-1.1, 1.1, -3.1, 3.1]
 
 label=['T1(S)','T2(S)','T3(S)','T_total(S) = T1(S)*T2(S)']
 
-#%% RTA en frec
-w1,h1=rta_frec(b=b1,a=a1,worN=worN1,label=label[0])
-w2,h2=rta_frec(b=b2,a=a2,worN=worN2,label=label[1])
-w3,h3=rta_frec(b=b3,a=a3,worN=worN3,label=label[2])
-
-#%% RTA de fase
-phase1=fase(w=w1,h=h1,label=label[0])
-phase2=fase(w=w2,h=h2,label=label[1])
-phase3=fase(w=w3,h=h3,label=label[2])
+#%% RTA en frec y de fase
+w1,h1,phase1=rta_frec_y_fase(b=b1,a=a1,worN=worN1,label=label[0])
+w2,h2,phase2=rta_frec_y_fase(b=b2,a=a2,worN=worN2,label=label[1])
+w3,h3,phase3=rta_frec_y_fase(b=b3,a=a3,worN=worN3,label=label[2])
 
 #%% Polos y ceros
 z1,p1,k1=polos_y_ceros(b=b1,a=a1,axis=axis1,label=label[0])
@@ -109,6 +106,5 @@ z2,p2,k2=polos_y_ceros(b=b2,a=a2,axis=axis2,label=label[1])
 z3,p3,k3=polos_y_ceros(b=b3,a=a3,axis=axis3,label=label[2])
 
 #%% Bonus 1
-w_total, h_total = rta_frec(b_total, a_total, worN_total, label=label[3])
-phase_total=fase(w=w_total,h=h_total,label=label[3])
+w_total, h_total, phase_total = rta_frec_y_fase(b_total, a_total, worN_total, label=label[3])
 z_total,p_total,k_total=polos_y_ceros(b=b_total,a=a_total,axis=axis_total,label=label[3])
